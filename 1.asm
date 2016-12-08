@@ -11,7 +11,7 @@ CSEG SEGMENT
 		MOV DS, AX
 		MOV AH, VAR1
 		MOV AL, AH
-		MUL AH
+		MUL AH				;进行al * ah 的操作，求 x 的平方
 		MOV DX, AX
 		MOV AL, VAR2
 		MOV AH, AL
@@ -21,7 +21,7 @@ CSEG SEGMENT
 		MOV DX, 0000H
 		ADC DX, 0000H					;得到进位
 		MOV WORD PTR VAR3 + 2, DX
-		MOV 4CH
+		MOV AH, 4CH
 		INT 21H
 CSEG ENDS
 END START
