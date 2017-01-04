@@ -1,0 +1,30 @@
+CSEG SEGMENT
+	ASSUME CS:CSEG
+	START:
+		SUB BX, BX			;初始化寄存器为零
+		SUB CX, CX
+		SUB DX, DX
+		MOV AX, 1234H		;初始化ax为1234H
+
+
+		MOV BL, AL
+		MOV CL, 12			
+		ROL BX, CL			;将 03 存入 BL
+
+		MOV CL, 4
+		ROL BH, CL
+		MOV AL, BH			;将 04 存入 AL
+		MOV BH, 00H
+
+		MOV DL, AH
+		MOV CL, 4
+		ROR DX, CL			;将 01 存入 DL
+		ROR DH, CL
+		MOV CL, DH			;将 02 存入 CL
+		MOV DH, 00H
+		MOV AH, 4CH
+		INT 21H
+CSEG ENDS
+END START
+
+

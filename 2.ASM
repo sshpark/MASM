@@ -1,47 +1,14 @@
-;ÒÑÖª10ÃûÑ§ÉúµÄ³É¼¨£¬ÏÖÔÚÐèÒªÍ³¼ÆÑ§Éú¼¸¸öÈËÊýÒÔ¼°²»¼°¸ñÈËÊý£¬²¢½«Í³¼Æ³öÀ´µÄÈËÊýÔÚÆÁÄ»ÉÏÏÔÊ¾
+;ä»Žé”®ç›˜è¾“å…¥å°å†™å­—æ¯ï¼Œç”¨å¤§å†™å­—æ¯è¾“å‡º
 
-DSEG SEGMENT
-	GRADE DB 58,69,56,44,95,12,77,86,96,63	;¶¨Òå10¸öÈËµÄ³É¼¨
-	MESS  DB 0DH, 0AH, "$"					;»Ø³µ»»ÐÐ
-DSEG ENDS
-
-CSEG SEGMENT 
-	ASSUME CS: CSEG, DS: DSEG
+CSEG SEGMENT
+	ASSUME CS:CSEG
 	START:
-		MOV AX, DSEG
-		MOV DS, AX
-		MOV CX, 10
-		MOV SI, OFFSET GRADE				;si <- GRADE
-		MOV BX, 0000H
-		MOV BP, 0000H
-	AGAIN:
-		MOV AL, DS:[SI]						;È¡·ÖÊý
-		CMP AL, 60D
-		JAE JIGE							;·ÖÊý´óÓÚ60¾ÍÌø×ªµ½jige±êºÅ´¦,·ñÔòË³ÐòÖ´ÐÐ
-		
-		INC BX								;²»¼°¸ñµÄÈËÊý¼Ó1
-		JMP EXIT
-		
-	JIGE:
-		INC BP								;¼°¸ñÈËÊý¼Ó1
-	EXIT:
-		INC SI
-		LOOP AGAIN							;cx×Ô¼õ 1 ºó£¬ Èç¹û²»ÎªÁãÔò×ªÒÆµ½again±êºÅ´¦
-	
-	DISPLAY:
-		ADD BX, 30H							;²»¼°¸ñÈËÊýµ÷ÕûÎªasciiÂë
-		MOV DL, BL							;½«²»¼°¸ñÈËÊýËÍÈëdl
+		MOV AH, 07H			;è°ƒç”¨dosåŠŸèƒ½è¾“å…¥ä¸å›žæ˜¾
+		INT 21H
+		MOV DL,AL			;å°†al -> dl ï¼Œdlä¸º02å·åŠŸèƒ½çš„è¾“å…¥å‚æ•°
 		MOV AH, 02H
 		INT 21H
-		LEA DX, MESS						;ÏÔÊ¾»Ø³µ»»ÐÐ
-		
-		MOV AH, 09H
-		INT 21H
-		ADD BP, 30H
-		MOV DX, BP							;½«¼°¸ñÈËÊýËÍÈëdl, ÒòÎªBPÎª16 Î»¼Ä´æÆ÷
-		MOV AH, 02H
-		INT 21H
-		MOV AH, 4CH
+		MOV AH,4CH			;ç»“æŸç¨‹åº
 		INT 21H
 CSEG ENDS
 END START

@@ -1,0 +1,39 @@
+;从自然数 1 开始累加， 当大于 1000 的时候输出自然数的个数
+DSEG SEGMENT
+	SUM	DW	?
+DSEG ENDS
+
+CSEG SEGMENT
+	ASSUME CS: CSEG, DS: DSEG
+	START:
+		MOV		AX, DSEG
+		MOV		DS, AX
+		MOV		AX, 0
+		MOV		BX, 1
+		MOV		CX, 0
+
+	LOP:
+		ADD		AX, BX
+		CMP		AX, 1000
+		INC 	BX
+		INC 	CX
+		JB		LOP
+
+		MOV		SUM, AX
+		MOV 	DL, CL
+		MOV 	AX, CX
+		MOV		BL, 0AH
+		DIV		BL
+		MOV 	BL, AH
+		MOV 	DL, AL
+		OR		DL, 30H
+		MOV 	AH,	2
+		INT 	21H
+		MOV 	DL, BL
+		OR		DL, 30H
+		MOV 	AH,	2
+		INT 	21H
+		MOV 	AH, 4CH
+		INT		21H
+CSEG ENDS
+END START

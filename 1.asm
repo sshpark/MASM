@@ -1,28 +1,27 @@
 DSEG SEGMENT
-	VAR1 DB 0FFH						;¶¨ÒåµÚÒ»¸öÊý¾Ý
-	VAR2 DB 0FFH						;¶¨ÒåµÚ¶þ¸öÊý¾Ý
-	VAR3 DD ?							;¶¨ÒåÒ»¸öË«×Ö±äÁ¿
+	VAR1 DB 0FFH
+	VAR2 DB 0FFH
+	VAR3 DD ?							;å®šä¹‰1ä¸ªåŒå­—å˜é‡
 DSEG ENDS
 
 CSEG SEGMENT
-	ASSUME CS:CSEG, DS:DSEG
+	ASSUME CS: CSEG, DS:DSEG
 	START:
-		MOV AX, DSEG
+		MOV AX, DSEG					;æ•°æ®æ®µçš„æ®µé¦–å€é€å…¥AXå¯„å­˜å™¨
 		MOV DS, AX
 		MOV AH, VAR1
 		MOV AL, AH
-		MUL AH							;½øÐÐal * ah µÄ²Ù×÷£¬Çó x µÄÆ½·½
+		MUL AH
 		MOV DX, AX
 		MOV AL, VAR2
 		MOV AH, AL
-		MUL AH							;½øÐÐal * ah µÄ²Ù×÷£¬Çó y µÄÆ½·½
-		ADD DX, AX						;½øÐÐ x2 + y2 µÄ²Ù×÷
-		MOV WORD PTR VAR3, DX			;½«ºÍËÍÈëvar3±äÁ¿µÄµÍ×Ö¡¢
+		MUL AH
+		ADD DX, AX
+		MOV WORD PTR VAR3, DX
 		MOV DX, 0000H
-		ADC DX, 0000H					;µÃµ½½øÎ»
+		ADC DX, 0000H
 		MOV WORD PTR VAR3 + 2, DX
 		MOV AH, 4CH
 		INT 21H
 CSEG ENDS
 END START
-		
